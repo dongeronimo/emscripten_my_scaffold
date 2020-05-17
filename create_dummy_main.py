@@ -1,6 +1,7 @@
 #IMPORTS
 import os # For directory creation
 import sys # Command line things
+import shutil
 
 class WrongParameterNumber(Exception):
     pass
@@ -9,6 +10,7 @@ class LackNameParameter(Exception):
     pass
 
 def print_instructions():
+    print("create_dummy_main creates a minimal c++ main file so that the project has something to compile")
     print("Parameters are :")
     print("-n <name> : name of the project, equal to name of the root directory")
 
@@ -37,36 +39,26 @@ def get_params_or_raise_error():
     test_name_parameter_presence(parameter_dict)
     return parameter_dict
 
-def create_root_dir_and_return_its_path(current_working_directory, name):
-    root_dir = f"{current_working_directory}/{name}"
-    os.mkdir(root_dir)
-    return root_dir
-
-def create_build_directory(root_dir):
-    build_dir = f"{root_dir}/build"
-    os.mkdir(build_dir)
-
-def create_deploy_directory(root_dir):
-    deploy_dir = f"{root_dir}/deploy"
-    os.mkdir(deploy_dir)
-
-def create_src_directory(root_dir):
-    src_dir = f"{root_dir}/src"
-    os.mkdir(src_dir)
-
 try:
     parameter_dict = get_params_or_raise_error()
     current_working_directory = os.getcwd()
-    root_dir = create_root_dir_and_return_its_path(os.getcwd(), parameter_dict['-n'])
-    create_build_directory(root_dir)
-    create_deploy_directory(root_dir)
-    create_src_directory(root_dir)
-
+    project_name =  parameter_dict['-n']
+    ## TODO: goto the src directory
+    src_directory = f"{current_working_directory}/{project_name}/src"
+    where_is_the_script = os.path.dirname(os.path.realpath(__file__))
+    print(f"where is the script {where_is_the_script}")
+    print(f"where working dir {current_working_directory}")
+    ## TODO: Write the main there
+    shutil.copyfile(
+        f"{where_is_the_script}/dummy_main.cpp",
+        f"{src_directory}/main.cpp"
+    )
+    pass
 except WrongParameterNumber:
-    print("create_directories error: Wrong number of parameters.")
+    print("create_dummy_main error: Wrong number of parameters.")
     print_instructions();
 except LackNameParameter:
-    print("create_directories error: name not informed (-n)")
+    print("create_dummy_main error: name not informed (-n)")
     print_instructions();
 except OSError as err:
-    print(f"fatal error {err}")
+    pass
