@@ -1,5 +1,8 @@
-#This script scaffolds an emscripten project, to save  my time
+#This script scaffolds an emscripten project, to save my time
+
 ##TODO 1) Grab the project name from command line
+PROJECT_NAME="$1"
+echo ${PROJECT_NAME}
 ##TODO 2) Create the root directory
 ##TODO 2.1) Create the main file
 ##TODO 2.2) Create the CMakeLists.txt
@@ -9,3 +12,4 @@
 ##TODO 4.1) Copy the docker configs to deploy directory
 ##TODO 4.2) Copy the heroku configs to deploy directory
 ##TODO 4.3) Set up heroku
+##TODO 5) Run everything
