@@ -64,4 +64,4 @@ except LackNameParameter:
     print("create_directories error: name not informed (-n)")
     print_instructions();
 except OSError as err:
-    pass
+    print(f"fatal error {err}")
